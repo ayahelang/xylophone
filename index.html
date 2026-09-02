@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b6cf0">
+  <meta name="description" content="Silver Xylophone — xylophone web app ringan, responsif, dan interaktif.">
+  <title>Silver Xylophone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">♫</div>
+        <div><strong>Silver Xylophone</strong><span>Play • Learn • Create</span></div>
+      </div>
+      <div class="actions">
+        <button id="themeBtn" class="icon-btn" title="Ganti tema" aria-label="Ganti tema">☾</button>
+        <button id="helpBtn" class="icon-btn" title="Bantuan" aria-label="Bantuan">?</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">WEB MUSICAL INSTRUMENT</p>
+        <h1>Play your <span>Silver</span> notes.</h1>
+        <p class="sub">Mainkan xylophone dengan mouse, sentuhan, atau keyboard. Ringan, cepat, dan langsung jalan di browser.</p>
+      </div>
+      <div class="status-card">
+        <span>NOW PLAYING</span>
+        <b id="nowNote">—</b>
+        <small id="nowFreq">Ready</small>
+      </div>
+    </section>
+
+    <section class="panel controls">
+      <div class="control">
+        <label for="volume">Volume <b id="volumeValue">80%</b></label>
+        <input id="volume" type="range" min="0" max="100" value="80">
+      </div>
+      <div class="control">
+        <label for="octave">Octave <b id="octaveValue">4</b></label>
+        <input id="octave" type="range" min="3" max="5" value="4">
+      </div>
+      <div class="control">
+        <label>Sound</label>
+        <select id="wave">
+          <option value="sine">Soft</option>
+          <option value="triangle" selected>Bright</option>
+          <option value="square">Digital</option>
+        </select>
+      </div>
+      <div class="control toggles">
+        <label>Effects</label>
+        <button id="reverbBtn" class="toggle active">✨ Reverb</button>
+      </div>
+    </section>
+
+    <section class="instrument-wrap">
+      <div class="instrument-head">
+        <div>
+          <span class="eyebrow">XYLOPHONE</span>
+          <h2 id="scaleName">C Major • Octave 4</h2>
+        </div>
+        <div class="mini-actions">
+          <button id="recordBtn" class="pill">● Record</button>
+          <button id="clearBtn" class="pill">Clear</button>
+        </div>
+      </div>
+
+      <div id="keys" class="keys" role="group" aria-label="Xylophone">
+      </div>
+
+      <div class="keyboard-hint">
+        <span>Keyboard</span>
+        <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd><kbd>G</kbd><kbd>H</kbd><kbd>J</kbd><kbd>K</kbd>
+        <em>Tap / click bars too</em>
+      </div>
+    </section>
+
+    <section class="panel features">
+      <article><div>🎵</div><b>Clean Tone</b><span>Suara sintetis ringan tanpa file audio besar.</span></article>
+      <article><div>⚡</div><b>Instant Play</b><span>Web Audio API membuat nada responsif.</span></article>
+      <article><div>📱</div><b>Touch Ready</b><span>Nyaman dimainkan di HP, tablet, dan laptop.</span></article>
+      <article><div>💾</div><b>Local Session</b><span>Urutan nada bisa direkam sementara di browser.</span></article>
+    </section>
+
+    <footer>Silver Xylophone <span>•</span> lightweight browser instrument</footer>
+  </main>
+
+  <dialog id="helpDialog">
+    <div class="dialog-inner">
+      <button id="closeHelp" class="close" aria-label="Tutup">×</button>
+      <p class="eyebrow">QUICK GUIDE</p>
+      <h2>Play Silver Xylophone</h2>
+      <ul>
+        <li>Klik atau tap batang xylophone untuk memainkan nada.</li>
+        <li>Gunakan <b>A S D F G H J K</b> sebagai shortcut keyboard.</li>
+        <li>Atur volume, octave, karakter suara, dan reverb.</li>
+        <li>Tekan <b>Record</b> untuk menyimpan urutan nada selama sesi.</li>
+      </ul>
+      <button id="closeHelp2" class="primary">Got it</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

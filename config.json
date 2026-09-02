@@ -1,0 +1,30 @@
+{
+  "name": "Silver Xylophone",
+  "version": "1.0.0",
+  "description": "Lightweight responsive browser xylophone.",
+  "features": [
+    "8-note C major xylophone",
+    "Mouse/touch/keyboard play",
+    "Volume control",
+    "Octave 3-5",
+    "Selectable oscillator tone",
+    "Optional reverb",
+    "Dark/light mode",
+    "Session recording sequence"
+  ],
+  "keyboard": {
+    "A": "C",
+    "S": "D",
+    "D": "E",
+    "F": "F",
+    "G": "G",
+    "H": "A",
+    "J": "B",
+    "K": "C"
+  },
+  "deployment": {
+    "platform": "GitHub Pages",
+    "backend": false,
+    "build_step": false
+  }
+}
