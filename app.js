@@ -15,14 +15,14 @@ let currentSong = null; // lagu yang sedang dilihat di detail
 let isPlayingSequence = false;
 
 const notes = [
-  { name: "C", semi: 0, key: "A", color: "#0b6cf0" },
-  { name: "D", semi: 2, key: "S", color: "#1479f5" },
-  { name: "E", semi: 4, key: "D", color: "#2188fa" },
-  { name: "F", semi: 5, key: "F", color: "#3295fb" },
-  { name: "G", semi: 7, key: "G", color: "#45a1fc" },
-  { name: "A", semi: 9, key: "H", color: "#5aafff" },
-  { name: "B", semi: 11, key: "J", color: "#73baff" },
-  { name: "C", semi: 12, key: "K", color: "#91c8ff" }
+  { name: "C", semi: 0, key: "A", color: "#e53935" },   // red
+  { name: "D", semi: 2, key: "S", color: "#fb8c00" },   // orange
+  { name: "E", semi: 4, key: "D", color: "#fdd835" },   // yellow
+  { name: "F", semi: 5, key: "F", color: "#43a047" },   // green
+  { name: "G", semi: 7, key: "G", color: "#00acc1" },   // cyan
+  { name: "A", semi: 9, key: "H", color: "#1e88e5" },   // blue
+  { name: "B", semi: 11, key: "J", color: "#8e24aa" },  // purple
+  { name: "C", semi: 12, key: "K", color: "#ec407a" }   // pink
 ];
 
 // ========== AUDIO ==========
