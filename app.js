@@ -4,7 +4,7 @@
 
 // ========== CONFIG ==========
 // Ganti URL di bawah dengan Web App URL dari Apps Script-mu
-const SCRIPT_URL = 'https://script.google.com/macros/s/PASTE_YOUR_DEPLOYMENT_ID_HERE/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzg-m-sVzL0r8ig-9ft8u5P0xHvnzVnelDfMxMHf8wS4NuOm8aFeJ4Kf1vFlhQw12jH/exec';
 
 // ========== STATE ==========
 const $ = s => document.querySelector(s);
