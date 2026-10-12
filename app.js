@@ -74,6 +74,8 @@ function play(n) {
   if (el) {
     el.classList.add("playing");
     setTimeout(() => el.classList.remove("playing"), 90);
+    // Animate mallet hitting this bar
+    animateMallet(el);
   }
   $("#nowNote").textContent = n.name;
   $("#nowFreq").textContent = `${Math.round(f)} Hz`;
@@ -81,6 +83,30 @@ function play(n) {
   if (recording) {
     sequence.push({ note: n.name, semi: n.semi, at: Date.now() - lastTime });
   }
+}
+
+// Alternate left/right mallet + move above the struck bar
+let lastMallet = "R";
+function animateMallet(keyEl) {
+  const stage = document.querySelector(".xylo-stage");
+  if (!stage || !keyEl) return;
+
+  lastMallet = lastMallet === "L" ? "R" : "L";
+  const mallet = lastMallet === "L" ? $("#malletL") : $("#malletR");
+  if (!mallet) return;
+
+  // Position mallet horizontally above the key
+  const stageRect = stage.getBoundingClientRect();
+  const keyRect = keyEl.getBoundingClientRect();
+  const centerX = keyRect.left + keyRect.width / 2 - stageRect.left;
+  mallet.style.left = (centerX - 7) + "px";  // 7 ≈ half mallet width
+
+  // Restart strike animation
+  mallet.classList.remove("striking");
+  // force reflow so animation can replay
+  void mallet.offsetWidth;
+  mallet.classList.add("striking");
+  setTimeout(() => mallet.classList.remove("striking"), 240);
 }
 
 function playSequence(seq) {
