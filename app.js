@@ -203,8 +203,8 @@ async function stopAndSave() {
     sequence = [];
     loadGallery();
   } catch (err) {
+    console.error("Save error:", err);
     showToast("Gagal simpan: " + err.message);
-    console.error(err);
   }
 }
 
@@ -240,18 +240,49 @@ document.addEventListener("keydown", e => {
 
 // ========== API HELPER ==========
 async function api(method, body = null, params = {}) {
-  const url = new URL(SCRIPT_URL);
-  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-
-  const opts = { method };
-  if (method === "POST" && body) {
-    opts.body = JSON.stringify(body);
-    opts.headers = { "Content-Type": "text/plain;charset=utf-8" }; // Apps Script prefers this for CORS
+  // Pastikan SCRIPT_URL sudah diganti
+  if (!SCRIPT_URL || SCRIPT_URL.includes("PASTE_YOUR")) {
+    throw new Error("SCRIPT_URL belum diisi. Ganti di app.js dengan Web App URL-mu.");
   }
 
-  const res = await fetch(url.toString(), opts);
-  if (!res.ok) throw new Error("Network error " + res.status);
-  return res.json();
+  const url = new URL(SCRIPT_URL);
+  Object.entries(params || {}).forEach(([k, v]) => url.searchParams.set(k, v));
+
+  let res;
+  try {
+    if (method === "GET") {
+      res = await fetch(url.toString(), {
+        method: "GET",
+        mode: "cors",
+        redirect: "follow",
+        cache: "no-cache"
+      });
+    } else {
+      // POST – Content-Type text/plain menghindari preflight CORS
+      res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "cors",
+        redirect: "follow",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(body || {})
+      });
+    }
+  } catch (networkErr) {
+    console.error("Fetch network error:", networkErr);
+    throw new Error("Failed to fetch. Cek: 1) SCRIPT_URL benar 2) Deploy 'Anyone' 3) Authorize script dulu");
+  }
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    console.error("HTTP error", res.status, text);
+    throw new Error("Server error " + res.status);
+  }
+
+  const data = await res.json();
+  return data;
 }
 
 // ========== GALLERY ==========
