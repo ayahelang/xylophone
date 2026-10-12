@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b6cf0">
-  <meta name="description" content="Silver Xylophone — xylophone web app ringan, responsif, dan interaktif.">
+  <meta name="description" content="Silver Xylophone — xylophone web app ringan, responsif, dan interaktif. Rekam, simpan, dan bagikan melodi.">
   <title>Silver Xylophone</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,7 +13,7 @@
     <header class="topbar">
       <div class="brand">
         <div class="logo" aria-hidden="true">♫</div>
-        <div><strong>Silver Xylophone</strong><span>Play • Learn • Create</span></div>
+        <div><strong>Silver Xylophone</strong><span>Play • Record • Share</span></div>
       </div>
       <div class="actions">
         <button id="themeBtn" class="icon-btn" title="Ganti tema" aria-label="Ganti tema">☾</button>
@@ -25,7 +25,7 @@
       <div>
         <p class="eyebrow">WEB MUSICAL INSTRUMENT</p>
         <h1>Play your <span>Silver</span> notes.</h1>
-        <p class="sub">Mainkan xylophone dengan mouse, sentuhan, atau keyboard. Ringan, cepat, dan langsung jalan di browser.</p>
+        <p class="sub">Mainkan xylophone, rekam melodi, simpan ke galeri, dan biarkan orang lain memainkan, like, serta berkomentar.</p>
       </div>
       <div class="status-card">
         <span>NOW PLAYING</span>
@@ -79,16 +79,103 @@
       </div>
     </section>
 
+    <!-- GALERI REKAMAN -->
+    <section class="panel gallery-section">
+      <div class="gallery-header">
+        <div>
+          <span class="eyebrow">GALERI</span>
+          <h2>Rekaman Publik</h2>
+        </div>
+        <button id="refreshGalleryBtn" class="pill">↻ Refresh</button>
+      </div>
+      <div id="galleryList" class="gallery-list">
+        <p class="gallery-empty">Memuat galeri…</p>
+      </div>
+    </section>
+
+    <!-- DETAIL LAGU (muncul saat pilih dari galeri) -->
+    <section id="songDetail" class="panel song-detail hidden">
+      <div class="song-detail-head">
+        <div>
+          <span class="eyebrow">LAGU</span>
+          <h2 id="detailTitle">—</h2>
+          <p id="detailMeta" class="detail-meta"></p>
+        </div>
+        <button id="closeDetailBtn" class="icon-btn" title="Tutup">×</button>
+      </div>
+
+      <div class="detail-actions">
+        <button id="playSongBtn" class="primary">▶ Play Melodi</button>
+        <button id="likeBtn" class="pill">♥ <span id="likeCount">0</span></button>
+        <button id="deleteBtn" class="pill danger">🗑 Hapus</button>
+      </div>
+
+      <div class="comments-block">
+        <h3>Komentar</h3>
+        <div id="commentsList" class="comments-list"></div>
+        <form id="commentForm" class="comment-form">
+          <input id="commentAuthor" type="text" placeholder="Namamu" maxlength="40" required>
+          <textarea id="commentText" placeholder="Tulis komentar…" maxlength="300" required rows="2"></textarea>
+          <button type="submit" class="primary">Kirim</button>
+        </form>
+      </div>
+    </section>
+
     <section class="panel features">
       <article><div>🎵</div><b>Clean Tone</b><span>Suara sintetis ringan tanpa file audio besar.</span></article>
       <article><div>⚡</div><b>Instant Play</b><span>Web Audio API membuat nada responsif.</span></article>
       <article><div>📱</div><b>Touch Ready</b><span>Nyaman dimainkan di HP, tablet, dan laptop.</span></article>
-      <article><div>💾</div><b>Local Session</b><span>Urutan nada bisa direkam sementara di browser.</span></article>
+      <article><div>💾</div><b>Cloud Gallery</b><span>Rekam & bagikan melodi via Google Sheets.</span></article>
     </section>
 
     <footer>Silver Xylophone <span>•</span> lightweight browser instrument</footer>
   </main>
 
+  <!-- Modal: Form sebelum Record -->
+  <dialog id="recordDialog">
+    <div class="dialog-inner">
+      <button id="closeRecordDialog" class="close" aria-label="Tutup">×</button>
+      <p class="eyebrow">REKAM MELODI</p>
+      <h2>Isi data rekaman</h2>
+      <form id="recordForm">
+        <label>Nama <span>*</span></label>
+        <input id="recAuthor" type="text" placeholder="Namamu" maxlength="40" required autocomplete="name">
+
+        <label>Judul Melodi <span>*</span></label>
+        <input id="recTitle" type="text" placeholder="Contoh: Twinkle Twinkle" maxlength="80" required>
+
+        <label>Password (untuk hapus nanti) <span>*</span></label>
+        <input id="recPassword" type="password" placeholder="Password rahasia" maxlength="40" required>
+
+        <p class="form-hint">Password ini dibutuhkan jika kamu ingin menghapus lagunya nanti. Simpan baik-baik.</p>
+
+        <div class="dialog-actions">
+          <button type="button" id="cancelRecord" class="pill">Batal</button>
+          <button type="submit" class="primary">Mulai Rekam</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal: Konfirmasi Hapus -->
+  <dialog id="deleteDialog">
+    <div class="dialog-inner">
+      <button id="closeDeleteDialog" class="close" aria-label="Tutup">×</button>
+      <p class="eyebrow">HAPUS LAGU</p>
+      <h2>Masukkan password</h2>
+      <form id="deleteForm">
+        <label>Password</label>
+        <input id="delPassword" type="password" placeholder="Password yang kamu set saat rekam" required>
+        <p class="form-hint">Hanya pemilik yang tahu password yang bisa menghapus.</p>
+        <div class="dialog-actions">
+          <button type="button" id="cancelDelete" class="pill">Batal</button>
+          <button type="submit" class="primary danger">Hapus Permanen</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal: Help -->
   <dialog id="helpDialog">
     <div class="dialog-inner">
       <button id="closeHelp" class="close" aria-label="Tutup">×</button>
@@ -98,11 +185,17 @@
         <li>Klik atau tap batang xylophone untuk memainkan nada.</li>
         <li>Gunakan <b>A S D F G H J K</b> sebagai shortcut keyboard.</li>
         <li>Atur volume, octave, karakter suara, dan reverb.</li>
-        <li>Tekan <b>Record</b> untuk menyimpan urutan nada selama sesi.</li>
+        <li>Tekan <b>Record</b> → isi Nama, Judul, Password → rekam melodi.</li>
+        <li>Setelah Stop, melodi otomatis masuk ke <b>Galeri</b>.</li>
+        <li>Pengunjung lain bisa Play, Like, dan Komentar.</li>
+        <li>Pemilik bisa menghapus lagunya dengan password.</li>
       </ul>
       <button id="closeHelp2" class="primary">Got it</button>
     </div>
   </dialog>
+
+  <!-- Toast notifikasi -->
+  <div id="toast" class="toast hidden"></div>
 
   <script src="app.js"></script>
 </body>

@@ -1,7 +1,7 @@
 {
   "name": "Silver Xylophone",
-  "version": "1.0.0",
-  "description": "Lightweight responsive browser xylophone.",
+  "version": "2.0.0",
+  "description": "Lightweight responsive browser xylophone with Google Sheets gallery.",
   "features": [
     "8-note C major xylophone",
     "Mouse/touch/keyboard play",
@@ -10,7 +10,9 @@
     "Selectable oscillator tone",
     "Optional reverb",
     "Dark/light mode",
-    "Session recording sequence"
+    "Record & save melody to Google Sheets",
+    "Public gallery with play, like, comment",
+    "Delete with owner password"
   ],
   "keyboard": {
     "A": "C",
@@ -24,7 +26,7 @@
   },
   "deployment": {
     "platform": "GitHub Pages",
-    "backend": false,
+    "backend": "Google Apps Script + Sheets",
     "build_step": false
   }
 }
